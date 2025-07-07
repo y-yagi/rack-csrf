@@ -6,6 +6,8 @@ require "uri"
 
 module Rack
   class CSRF
+    SAFE_REQUEST_METHODS = %w[GET HEAD OPTIONS].freeze
+
     def initialize(app, opts = {})
       @app = app
       @exclude = opts[:exclude]
@@ -42,7 +44,7 @@ module Rack
     end
 
     def safe_request_method?(env)
-      %w(GET HEAD OPTIONS).include?(env["REQUEST_METHOD"]) ? true : false
+      SAFE_REQUEST_METHODS.include?(env["REQUEST_METHOD"]) ? true : false
     end
 
     def request_from_safe_site?(env)

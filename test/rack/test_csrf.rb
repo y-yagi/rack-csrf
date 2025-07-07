@@ -67,14 +67,12 @@ class Rack::TestCsrf < Minitest::Test
     assert_raises ArgumentError do
       Rack::Builder.new do
         use Rack::CSRF, trusted_origins: "https://trusted.example.com"
-        run lambda { |_env| [200, {}, ["Hello World"]] }
       end.to_app
     end
 
     assert_raises ArgumentError do
       Rack::Builder.new do
         use Rack::CSRF, trusted_origins: "trusted.example.com"
-        run lambda { |_env| [200, {}, ["Hello World"]] }
       end.to_app
     end
   end
